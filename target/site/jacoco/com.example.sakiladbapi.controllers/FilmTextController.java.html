@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilmTextController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sakiladbapi</a> &gt; <a href="index.source.html" class="el_package">com.example.sakiladbapi.controllers</a> &gt; <span class="el_source">FilmTextController.java</span></div><h1>FilmTextController.java</h1><pre class="source lang-java linenums">package com.example.sakiladbapi.controllers;
+
+import com.example.sakiladbapi.entities.FilmText;
+import com.example.sakiladbapi.input.FilmTextInput;
+import com.example.sakiladbapi.repositories.FilmTextRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+<span class="nc" id="L13">public class FilmTextController {</span>
+@Autowired
+FilmTextRepository filmTextRepository;
+
+@GetMapping(&quot;filmTexts&quot;)
+    public List&lt;FilmText&gt; getFilmTextList(){
+<span class="nc" id="L19">    return filmTextRepository.findAll();</span>
+}
+
+@GetMapping(&quot;filmTexts/{id}&quot;)
+    public FilmText getFilmText(@PathVariable Short id){
+<span class="nc" id="L24">    return filmTextRepository.findById(id).orElseThrow();</span>
+}
+
+@PostMapping(&quot;filmTexts&quot;)
+    public FilmText createFilm(@Validated @RequestBody FilmTextInput request){
+<span class="nc" id="L29">    FilmText filmText = new FilmText();</span>
+<span class="nc" id="L30">        MapFromRequest(filmText, request);</span>
+<span class="nc" id="L31">        return filmTextRepository.save(filmText);</span>
+    }
+
+    @PatchMapping(&quot;filmTexts/{id}&quot;)
+    public FilmText updateActor(@PathVariable Short id, @Validated @RequestBody FilmTextInput request){
+<span class="nc" id="L36">        FilmText filmText = filmTextRepository.findById(id).orElseThrow();</span>
+<span class="nc" id="L37">        filmText = MapFromRequest(filmText, request);</span>
+<span class="nc" id="L38">        return filmTextRepository.save(filmText);</span>
+    }
+    @DeleteMapping(&quot;filmTexts/{id}&quot;)
+    public void deleteActor(@PathVariable Short id){
+<span class="nc" id="L42">        filmTextRepository.deleteById(id);</span>
+<span class="nc" id="L43">    }</span>
+
+    private FilmText MapFromRequest(FilmText filmText, FilmTextInput request) {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (request.getTitle() != null) {</span>
+<span class="nc" id="L47">            filmText.setTitle(request.getTitle());</span>
+        }
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (request.getDescription() != null) {</span>
+<span class="nc" id="L50">            filmText.setDescription(request.getDescription());</span>
+        }
+<span class="nc" id="L52">        return filmText;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

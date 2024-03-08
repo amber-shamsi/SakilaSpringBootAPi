@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sakiladbapi</a> &gt; <a href="index.source.html" class="el_package">com.example.sakiladbapi.controllers</a> &gt; <span class="el_source">ActorController.java</span></div><h1>ActorController.java</h1><pre class="source lang-java linenums">package com.example.sakiladbapi.controllers;
+
+import com.example.sakiladbapi.input.ActorInput;
+import com.example.sakiladbapi.models.FilmModel;
+import com.example.sakiladbapi.repositories.ActorRepository;
+import com.example.sakiladbapi.entities.Actor;
+import com.example.sakiladbapi.services.ActorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.ResourceAccessException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+public class ActorController {
+    @Autowired
+    ActorRepository actorRepository;
+    @Autowired
+    private final ActorService actorService;
+
+<span class="fc" id="L23">    public ActorController(ActorService actorService){</span>
+<span class="fc" id="L24">        this.actorService = actorService;</span>
+<span class="fc" id="L25">    }</span>
+    @GetMapping(&quot;/actors&quot;)
+    public List&lt;Actor&gt; getActorList(){
+<span class="nc" id="L28">        return actorRepository.findAll();</span>
+    }
+    @GetMapping(&quot;/actors/{id}&quot;)
+    public Actor getActor(@PathVariable Short id){
+<span class="fc" id="L32">        return actorService.getActorById(id);</span>
+    }
+
+    @PostMapping(&quot;actors&quot;)
+    public Actor createActor(@Validated @RequestBody ActorInput request){
+<span class="nc" id="L37">        final var actor = new Actor();</span>
+<span class="nc" id="L38">        actor.setFirstName(request.getFirstName());</span>
+<span class="nc" id="L39">        actor.setLastName(request.getLastName());</span>
+<span class="nc" id="L40">        return actorRepository.save(actor);</span>
+    }
+
+    @PostMapping(&quot;actors/movies/{actorId}/{filmId}&quot;)
+    public Actor createActorMovieLink(@PathVariable Short actorId, @PathVariable Short filmId){
+<span class="nc" id="L45">        return actorService.createMovieLink(actorId, filmId);</span>
+    }
+
+    @DeleteMapping(&quot;actors/movies/{actorId}/{filmId}&quot;)
+    public Actor deleteActorMovieLink(@PathVariable Short actorId, @PathVariable Short filmId){
+<span class="nc" id="L50">        return actorService.deleteMovieLink(actorId, filmId);</span>
+    }
+
+    @PatchMapping(&quot;actors/{id}&quot;)
+    public Actor updateActor(@PathVariable Short id, @Validated @RequestBody ActorInput request){
+<span class="nc" id="L55">        Actor actor = actorRepository.findById(id).orElseThrow();</span>
+<span class="nc" id="L56">        actor.setFirstName(request.getFirstName());</span>
+<span class="nc" id="L57">        actor.setLastName(request.getLastName());</span>
+<span class="nc" id="L58">        return actorRepository.save(actor);</span>
+    }
+
+    @DeleteMapping(&quot;actors/{id}&quot;)
+    public void deleteActor(@PathVariable Short id){
+<span class="nc" id="L63">        actorRepository.deleteById(id);</span>
+<span class="nc" id="L64">    }</span>
+
+    @GetMapping(&quot;actors/starsIn/{id}&quot;)
+    public List&lt;FilmModel&gt; starsIn(@PathVariable Short id){
+<span class="nc" id="L68">        final var actor = actorRepository.findById(id).orElseThrow();</span>
+<span class="nc" id="L69">        List&lt;FilmModel&gt; list = new ArrayList&lt;FilmModel&gt;();</span>
+<span class="nc" id="L70">        actor.getFilms().forEach((film) -&gt; {</span>
+<span class="nc" id="L71">            FilmModel filmModel = new FilmModel(film);</span>
+<span class="nc" id="L72">            list.add(filmModel);</span>
+<span class="nc" id="L73">        });</span>
+<span class="nc" id="L74">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

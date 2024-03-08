@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RentalController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sakiladbapi</a> &gt; <a href="index.source.html" class="el_package">com.example.sakiladbapi.controllers</a> &gt; <span class="el_source">RentalController.java</span></div><h1>RentalController.java</h1><pre class="source lang-java linenums">package com.example.sakiladbapi.controllers;
+
+
+import com.example.sakiladbapi.entities.Rental;
+import com.example.sakiladbapi.input.RentalInput;
+import com.example.sakiladbapi.repositories.RentalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+<span class="nc" id="L14">public class RentalController {</span>
+    @Autowired
+    RentalRepository rentalRepository;
+
+    @GetMapping(&quot;rentals&quot;)
+    public List&lt;Rental&gt; getRentalList(){
+<span class="nc" id="L20">        return rentalRepository.findAll();</span>
+    }
+
+    @GetMapping(&quot;rentals/{id}&quot;)
+    public Rental getRental(@PathVariable Short id){
+<span class="nc" id="L25">        return rentalRepository.findById(id).orElseThrow();</span>
+    }
+
+    @PostMapping(&quot;rentals&quot;)
+    public Rental createRental(@Validated @RequestBody RentalInput request){
+<span class="nc" id="L30">        Rental filmText = new Rental();</span>
+<span class="nc" id="L31">        MapFromRequest(filmText, request);</span>
+<span class="nc" id="L32">        return rentalRepository.save(filmText);</span>
+    }
+
+    @PatchMapping(&quot;rentals/{id}&quot;)
+    public Rental updateRental(@PathVariable Short id, @Validated @RequestBody RentalInput request){
+<span class="nc" id="L37">        Rental rental = rentalRepository.findById(id).orElseThrow();</span>
+<span class="nc" id="L38">        rental = MapFromRequest(rental, request);</span>
+<span class="nc" id="L39">        return rentalRepository.save(rental);</span>
+    }
+    @DeleteMapping(&quot;rentals/{id}&quot;)
+    public void deleteRental(@PathVariable Short id){
+<span class="nc" id="L43">        rentalRepository.deleteById(id);</span>
+<span class="nc" id="L44">    }</span>
+
+    private Rental MapFromRequest(Rental rental, RentalInput request) {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (request.getRentalDate() != null) {</span>
+<span class="nc" id="L48">            rental.setRentalDate(request.getRentalDate());</span>
+        }
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (request.getReturnDate() != null) {</span>
+<span class="nc" id="L51">            rental.setRentalDate(request.getReturnDate());</span>
+        }
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (request.getCustomerId() != null) {</span>
+<span class="nc" id="L54">            rental.setCustomerId(request.getCustomerId());</span>
+        }
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (request.getStaffId() != null) {</span>
+<span class="nc" id="L57">            rental.setStaffId(request.getStaffId());</span>
+        }
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (request.getInventoryId() != null) {</span>
+<span class="nc" id="L60">            rental.setInventoryId(request.getInventoryId());</span>
+        }
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (request.getLastUpdate() != null) {</span>
+<span class="nc" id="L63">            rental.setLastUpdate(request.getLastUpdate());</span>
+        }
+<span class="nc" id="L65">        return rental;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
