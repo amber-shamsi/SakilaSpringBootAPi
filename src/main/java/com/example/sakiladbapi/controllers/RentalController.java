@@ -28,14 +28,14 @@ public class RentalController {
     @PostMapping("rentals")
     public Rental createRental(@Validated @RequestBody RentalInput request){
         Rental filmText = new Rental();
-        MapFromRequest(filmText, request);
+        mapFromRequest(filmText, request);
         return rentalRepository.save(filmText);
     }
 
     @PatchMapping("rentals/{id}")
     public Rental updateRental(@PathVariable Short id, @Validated @RequestBody RentalInput request){
         Rental rental = rentalRepository.findById(id).orElseThrow();
-        rental = MapFromRequest(rental, request);
+        rental = mapFromRequest(rental, request);
         return rentalRepository.save(rental);
     }
     @DeleteMapping("rentals/{id}")
@@ -43,7 +43,7 @@ public class RentalController {
         rentalRepository.deleteById(id);
     }
 
-    private Rental MapFromRequest(Rental rental, RentalInput request) {
+    private Rental mapFromRequest(Rental rental, RentalInput request) {
         if (request.getRentalDate() != null) {
             rental.setRentalDate(request.getRentalDate());
         }

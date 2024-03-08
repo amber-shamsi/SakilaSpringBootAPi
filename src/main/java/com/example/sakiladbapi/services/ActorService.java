@@ -1,13 +1,10 @@
 package com.example.sakiladbapi.services;
 
 import com.example.sakiladbapi.entities.Actor;
-import com.example.sakiladbapi.entities.Film;
 import com.example.sakiladbapi.repositories.ActorRepository;
 import com.example.sakiladbapi.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.util.Objects;

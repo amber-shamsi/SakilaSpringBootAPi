@@ -2,24 +2,15 @@ package com.example.sakiladbapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ActorModel {
-    public ActorModel(String firstName, String lastName) {
-
-    }
-
-    public ActorModel() {
-
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

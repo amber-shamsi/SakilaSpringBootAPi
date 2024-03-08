@@ -8,7 +8,6 @@ import com.example.sakiladbapi.services.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +65,7 @@ public class ActorController {
     @GetMapping("actors/starsIn/{id}")
     public List<FilmModel> starsIn(@PathVariable Short id){
         final var actor = actorRepository.findById(id).orElseThrow();
-        List<FilmModel> list = new ArrayList<FilmModel>();
+        List<FilmModel> list = new ArrayList<>();
         actor.getFilms().forEach((film) -> {
             FilmModel filmModel = new FilmModel(film);
             list.add(filmModel);
