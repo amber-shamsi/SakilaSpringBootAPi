@@ -15,8 +15,11 @@ import java.util.List;
 @Getter
 @Setter
 public class Actor {
-	public Actor(String firstName, String lastName) {
 
+	public Actor(Short id, String firstName, String lastName) {
+		this.id  = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public Actor() {

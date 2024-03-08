@@ -18,16 +18,18 @@ public class ActorController {
     @Autowired
     ActorRepository actorRepository;
     @Autowired
-    ActorService actorService;
+    private final ActorService actorService;
 
+    public ActorController(ActorService actorService){
+        this.actorService = actorService;
+    }
     @GetMapping("/actors")
     public List<Actor> getActorList(){
         return actorRepository.findAll();
     }
     @GetMapping("/actors/{id}")
     public Actor getActor(@PathVariable Short id){
-        return actorRepository.findById(id).orElseThrow(()
-                -> new ResourceAccessException("No Actor could be found with that id."));
+        return actorService.getActorById(id);
     }
 
     @PostMapping("actors")

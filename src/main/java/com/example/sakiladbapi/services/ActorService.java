@@ -20,6 +20,12 @@ public class ActorService {
     @Autowired
     ActorRepository actorRepository;
 
+    public Actor getActorById(Short id){
+
+        return actorRepository.findById(id).orElseThrow(()
+                -> new ResourceAccessException("No Actor could be found with that id."));
+    }
+
     public Actor createMovieLink(Short actorId, Short filmId){
         var actor = actorRepository.findById(actorId).orElseThrow(()
                 -> new ResourceAccessException("No actor could be found with that id."));
